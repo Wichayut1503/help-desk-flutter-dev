@@ -1,0 +1,48 @@
+name: flutter_application_1
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  flutter_bloc: ^8.1.4
+  dio: ^5.4.1
+  http: ^1.2.1
+  fluttertoast: ^8.2.4
+  water_drop_nav_bar: ^2.2.0+5
+  flutter_profile_picture: ^2.0.0
+  toggle_switch: ^2.1.0
+  email_validator: ^2.1.17
+  flutter_svg: ^2.0.10+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo_evt.png
+    - assets/images/avatar.png
+    - assets/images/Profile Image.png
+    - assets/images/profile.png
+    - assets/images/Bell.png
+    - assets/images/setting.png
+    - assets/images/logout.png
+
+  fonts:
+    - family: IBMPlexSans
+      fonts:
+        - asset: assets/fonts/IBMPlexSansThai-Medium.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Bold.ttf
+        - asset: assets/fonts/IBMPlexSansThai-ExtraLight.ttf         
+        - asset: assets/fonts/IBMPlexSansThai-Light.ttf         
+        - asset: assets/fonts/IBMPlexSansThai-Regular.ttf          
+        - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Thin.ttf
