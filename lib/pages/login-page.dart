@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
 import 'package:flutter_application_1/components/textfield.dart';
+import 'package:flutter_application_1/pages/forgot-password-page.dart';
 import 'package:flutter_application_1/pages/main-page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -187,13 +188,25 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('ลืมรหัสผ่าน ?',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 0, 95, 188),
-                          fontWeight: FontWeight.bold))
+                  // Text('ลืมรหัสผ่าน ?',
+                  //     style: TextStyle(
+                  //         color: Color.fromARGB(255, 0, 95, 188),
+                  //         fontWeight: FontWeight.bold))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgotPassword()));
+                      },
+                      child: const Text("ลืมรหัสผ่าน ?",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 0, 95, 188),
+                              fontWeight: FontWeight.bold)))
                 ],
               )
             ],
