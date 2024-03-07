@@ -19,12 +19,22 @@ dependencies:
   toggle_switch: ^2.1.0
   email_validator: ^2.1.17
   flutter_svg: ^2.0.10+1
+  another_flutter_splash_screen: ^1.2.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/images/logo_evt_android.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo_evt_android.png"
+
 flutter:
   uses-material-design: true
   assets:
@@ -35,6 +45,7 @@ flutter:
     - assets/images/Bell.png
     - assets/images/setting.png
     - assets/images/logout.png
+    - assets/images/logo_evt_android.png
 
   fonts:
     - family: IBMPlexSans
