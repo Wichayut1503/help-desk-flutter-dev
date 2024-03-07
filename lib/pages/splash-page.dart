@@ -28,8 +28,8 @@ class _SplashPageState extends State<SplashPage> {
             
           ),
           childWidget: SizedBox(
-            height: 250,
-            width: 250,
+            height: 300,
+            width: 300,
             child: Image.asset("assets/images/logo_evt.png"),
           ),
           duration: const Duration(milliseconds: 2600),
