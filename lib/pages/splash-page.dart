@@ -20,13 +20,19 @@ class _SplashPageState extends State<SplashPage> {
               Color.fromARGB(255, 46, 53, 121),
               Color.fromARGB(255, 0, 95, 188),
             ],
+            //! พื้นหลังจะเอาสีไรดี น้ำเงินหรือขาว
+            // colors: [
+            //   Colors.white,
+            //   Colors.white,
+            // ],
+            
           ),
           childWidget: SizedBox(
             height: 250,
             width: 250,
             child: Image.asset("assets/images/logo_evt.png"),
           ),
-          duration: const Duration(milliseconds: 2500),
+          duration: const Duration(milliseconds: 2600),
           animationDuration: const Duration(milliseconds: 2000),
           onAnimationEnd: () => debugPrint("On Scale End"),
           nextScreen: LoginPage(),
