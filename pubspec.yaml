@@ -19,6 +19,7 @@ dependencies:
   toggle_switch: ^2.1.0
   email_validator: ^2.1.17
   flutter_svg: ^2.0.10+1
+  another_flutter_splash_screen: ^1.2.0
 
 dev_dependencies:
   flutter_test:
