@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class MyButton extends StatelessWidget {
   final Function()? onTap;
   final bool isEnabled;
+  final String btnName;
 
-  const MyButton({Key? key, required this.onTap, this.isEnabled = true})
-      : super(key: key);
+  const MyButton({super.key, required this.onTap, this.isEnabled = true, this.btnName = "เข้าสู่ระบบ"});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class MyButton extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 25),
         child: Center(
           child: Text(
-            "เข้าสู่ระบบ",
+            btnName,
             style: TextStyle(
               color: isEnabled
               ? Colors.white

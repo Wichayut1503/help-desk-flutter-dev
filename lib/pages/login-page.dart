@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Are you a admin ?',
+                      'Are you an admin ?',
                       style:
                           TextStyle(color: Color.fromARGB(255, 117, 117, 117)),
                     ),
