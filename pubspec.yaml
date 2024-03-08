@@ -46,6 +46,8 @@ flutter:
     - assets/images/setting.png
     - assets/images/logout.png
     - assets/images/logo_evt_android.png
+    - assets/images/cancel.png
+    - assets/images/correct.png
 
   fonts:
     - family: IBMPlexSans

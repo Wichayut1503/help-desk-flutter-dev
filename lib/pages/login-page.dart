@@ -84,132 +84,129 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Image.asset('assets/images/logo_evt.png'),
-              const SizedBox(height: 50),
-              const SizedBox(height: 25),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        'อีเมล',
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
+                Image.asset('assets/images/logo_evt.png'),
+                const SizedBox(height: 50),
+                const SizedBox(height: 25),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'อีเมล',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                MyTextField(
+                  controller: usernameController,
+                  hintText: 'กรุณากรอกข้อมูล',
+                  obscureText: false,
+                  statusHttp: status,
+                  updateStatus: (newStatus) {
+                    setState(() {
+                      status = newStatus;
+                    });
+                  },
+                  showErrorMessage: false,
+                ),
+                const SizedBox(height: 24),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'รหัสผ่าน',
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                MyTextField(
+                  controller: passwordController,
+                  hintText: 'กรุณากรอกข้อมูล',
+                  obscureText: true,
+                  statusHttp: status,
+                  updateStatus: (newStatus) {
+                    setState(() {
+                      status = newStatus;
+                    });
+                  },
+                ),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Are you an admin ?',
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 117, 117, 117)),
+                      ),
+                      Text(
+                        ' Login',
                         style: TextStyle(
+                          color: Color.fromARGB(255, 255, 84, 68),
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              MyTextField(
-                controller: usernameController,
-                hintText: 'กรุณากรอกข้อมูล',
-                obscureText: false,
-                statusHttp: status,
-                updateStatus: (newStatus) {
-                  setState(() {
-                    status = newStatus;
-                  });
-                },
-                showErrorMessage: false,
-              ),
-              const SizedBox(height: 24),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                const SizedBox(height: 25),
+                MyButton(
+                  onTap: () => signUserIn(context),
+                  isEnabled: isButtonActive,
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        'รหัสผ่าน',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                    )
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ForgotPassword()));
+                        },
+                        child: const Text("ลืมรหัสผ่าน ?",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 0, 95, 188),
+                                fontWeight: FontWeight.bold)))
                   ],
-                ),
-              ),
-              MyTextField(
-                controller: passwordController,
-                hintText: 'กรุณากรอกข้อมูล',
-                obscureText: true,
-                statusHttp: status,
-                updateStatus: (newStatus) {
-                  setState(() {
-                    status = newStatus;
-                  });
-                },
-              ),
-              const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Are you an admin ?',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 117, 117, 117)),
-                    ),
-                    Text(
-                      ' Login',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 84, 68),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 25),
-              MyButton(
-                onTap: () => signUserIn(context),
-                isEnabled: isButtonActive,
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Text('ลืมรหัสผ่าน ?',
-                  //     style: TextStyle(
-                  //         color: Color.fromARGB(255, 0, 95, 188),
-                  //         fontWeight: FontWeight.bold))
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ForgotPassword()));
-                      },
-                      child: const Text("ลืมรหัสผ่าน ?",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 0, 95, 188),
-                              fontWeight: FontWeight.bold)))
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

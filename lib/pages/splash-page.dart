@@ -16,16 +16,15 @@ class _SplashPageState extends State<SplashPage> {
           gradient: const LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            colors: [
-              Color.fromARGB(255, 46, 53, 121),
-              Color.fromARGB(255, 0, 95, 188),
-            ],
-            //! พื้นหลังจะเอาสีไรดี น้ำเงินหรือขาว
             // colors: [
-            //   Colors.white,
-            //   Colors.white,
+            //   Color.fromARGB(255, 46, 53, 121),
+            //   Color.fromARGB(255, 0, 95, 188),
             // ],
-            
+            //! พื้นหลังจะเอาสีไรดี น้ำเงินหรือขาว
+            colors: [
+              Colors.white,
+              Colors.white,
+            ],
           ),
           childWidget: SizedBox(
             height: 300,
