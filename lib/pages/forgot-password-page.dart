@@ -254,7 +254,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
 
     print(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 202) {
       Fluttertoast.showToast(
           msg: "ตรวจสอบ Email",
           toastLength: Toast.LENGTH_LONG,
