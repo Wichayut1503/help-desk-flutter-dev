@@ -12,28 +12,20 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return FlutterSplashScreen.scale(
-          gradient: const LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            // colors: [
-            //   Color.fromARGB(255, 46, 53, 121),
-            //   Color.fromARGB(255, 0, 95, 188),
-            // ],
-            //! พื้นหลังจะเอาสีไรดี น้ำเงินหรือขาว
-            colors: [
-              Colors.white,
-              Colors.white,
-            ],
-          ),
+    return FlutterSplashScreen.fadeIn(
+          backgroundColor: Colors.white,
+          onInit: () {
+            debugPrint("On Init");
+          },
+          onEnd: () {
+            debugPrint("On End");
+          },
           childWidget: SizedBox(
-            height: 300,
-            width: 300,
+            height: 200,
+            width: 200,
             child: Image.asset("assets/images/logo_evt.png"),
           ),
-          duration: const Duration(milliseconds: 2600),
-          animationDuration: const Duration(milliseconds: 2000),
-          onAnimationEnd: () => debugPrint("On Scale End"),
+          onAnimationEnd: () => debugPrint("On Fade In End"),
           nextScreen: LoginPage(),
         );
   }

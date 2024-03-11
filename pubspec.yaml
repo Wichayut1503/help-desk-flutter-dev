@@ -14,13 +14,13 @@ dependencies:
   dio: ^5.4.1
   http: ^1.2.1
   fluttertoast: ^8.2.4
-  water_drop_nav_bar: ^2.2.0+5
   flutter_profile_picture: ^2.0.0
   toggle_switch: ^2.1.0
   email_validator: ^2.1.17
   flutter_svg: ^2.0.10+1
   another_flutter_splash_screen: ^1.2.0
   flutter_launcher_icons: ^0.13.1
+  salomon_bottom_bar: ^3.3.2
 
 dev_dependencies:
   flutter_test:
