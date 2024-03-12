@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
 import 'package:flutter_application_1/components/textfield.dart';
-import 'package:flutter_application_1/pages/forgot-password-page.dart';
+import 'package:flutter_application_1/pages/authentication/forgot-password-page.dart';
 import 'package:flutter_application_1/pages/main-page.dart';
+import 'package:flutter_application_1/services/account-service.dart';
+import 'package:flutter_application_1/services/global-service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,8 +18,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final apiUrl =
-      Uri.parse("http://dekdee2.informatics.buu.ac.th:8019/api/auth/login");
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   int status = 200;
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> signUserIn(BuildContext context) async {
     var response = await http.post(
-      apiUrl,
+      AccountService.AuthLogin,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "email": usernameController.text,
@@ -52,7 +52,12 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
+      String jsonString = response.body;
+
+      Map<String, dynamic> data = json.decode(jsonString);
+
+      String accessToken = data['data']['accessToken'];
+      GlobalService().accessToken = accessToken;
       setState(() {
         status = response.statusCode;
       });
@@ -156,8 +161,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         'Are you an admin ?',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 117, 117, 117)),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 117, 117, 117)),
                       ),
                       Text(
                         ' Login',
@@ -197,7 +202,8 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ForgotPassword()));
+                                  builder: (context) =>
+                                      const ForgotPassword()));
                         },
                         child: const Text("ลืมรหัสผ่าน ?",
                             style: TextStyle(

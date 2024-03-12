@@ -1,17 +1,23 @@
+import 'dart:convert';
+import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
+import 'package:flutter_application_1/pages/account/show-list-account.dart';
+import 'package:flutter_application_1/services/account-service.dart';
+import 'package:flutter_application_1/services/global-service.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/profile-page.dart';
+import 'package:flutter_application_1/pages/account/profile-page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MyMainPage extends StatefulWidget {
   const MyMainPage({Key? key}) : super(key: key);
-static final title = 'salomon_bottom_bar';
+  static final title = 'salomon_bottom_bar';
   @override
   State<MyMainPage> createState() => _MyMainPageState();
 }
 
 class _MyMainPageState extends State<MyMainPage> {
   var _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,19 +26,12 @@ class _MyMainPageState extends State<MyMainPage> {
         body: IndexedStack(
           index: _currentIndex,
           children: [
-            
-            // หน้า Home
-            Container(
-              color: Colors.purple,
-              child: const Center(
-                child: Text("Home Page",
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
-              ),
-            ),
+            // หน้า ShowList
+            const ShowListAccount(),
 
             // หน้า Likes
             Container(
-              color: Colors.pink,
+              color: Color.fromARGB(255, 0, 95, 188),
               child: const Center(
                 child: Text("Likes Page",
                     style: TextStyle(color: Colors.white, fontSize: 24.0)),
@@ -41,7 +40,7 @@ class _MyMainPageState extends State<MyMainPage> {
 
             // หน้า Search
             Container(
-              color: Colors.orange,
+              color: Color.fromARGB(255, 0, 95, 188),
               child: const Center(
                 child: Text("Search Page",
                     style: TextStyle(color: Colors.white, fontSize: 24.0)),
@@ -49,7 +48,7 @@ class _MyMainPageState extends State<MyMainPage> {
             ),
 
             // หน้า Profile
-            const ProfileScreen(),
+            ProfilePage(),
           ],
         ),
         bottomNavigationBar: SalomonBottomBar(
@@ -60,22 +59,22 @@ class _MyMainPageState extends State<MyMainPage> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.home),
               title: const Text("Home"),
-              selectedColor: Colors.purple,
+              selectedColor: Color.fromARGB(255, 0, 95, 188)
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.favorite_border),
               title: const Text("Likes"),
-              selectedColor: Colors.pink,
+              selectedColor: Color.fromARGB(255, 0, 95, 188)
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.search),
               title: const Text("Search"),
-              selectedColor: Colors.orange,
+              selectedColor: Color.fromARGB(255, 0, 95, 188)
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text("Profile"),
-              selectedColor: Colors.teal,
+              selectedColor: Color.fromARGB(255, 0, 95, 188),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/login-page.dart';
+import 'package:flutter_application_1/pages/authentication/login-page.dart';
 import 'package:flutter_application_1/pages/splash-page.dart';
 
 void main() {
@@ -19,4 +19,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

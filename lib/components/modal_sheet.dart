@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
-import 'package:flutter_application_1/pages/login-page.dart';
+import 'package:flutter_application_1/pages/authentication/login-page.dart';
 
 class ModalSheet extends StatelessWidget {
   final bool isSuccess;
