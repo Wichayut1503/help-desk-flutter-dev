@@ -8,13 +8,13 @@ class MyAccount {
   MyAccount.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -63,18 +63,18 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['fullName'] = this.fullName;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['phone'] = this.phone;
-    data['imagePath'] = this.imagePath;
-    data['companyId'] = this.companyId;
-    data['companyName'] = this.companyName;
-    data['roleName'] = this.roleName;
-    data['createdAt'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['email'] = email;
+    data['fullName'] = fullName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['phone'] = phone;
+    data['imagePath'] = imagePath;
+    data['companyId'] = companyId;
+    data['companyName'] = companyName;
+    data['roleName'] = roleName;
+    data['createdAt'] = createdAt;
     return data;
   }
 }

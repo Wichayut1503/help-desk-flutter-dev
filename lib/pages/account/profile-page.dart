@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<MyAccount> getDataAccount(String token) async {
     final response = await http.get(
-      AccountService.MyAccount,
+      AccountService.myAccount,
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",
@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
           future: myAccount,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(); // Show loading indicator while fetching data
+              return const CircularProgressIndicator(); // Show loading indicator while fetching data
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: Text(
                       email,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                   ),
                   ProfileMenu(

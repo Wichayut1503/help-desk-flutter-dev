@@ -11,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:email_validator/email_validator.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -27,8 +27,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    usernameController.addListener(_checkInput);
-    passwordController.addListener(_checkInput);
+    //usernameController.addListener(_checkInput);
+    //passwordController.addListener(_checkInput);
+    isButtonActive = true;
   }
 
   //! เอาไว้เช็คค่าของช่องกรอกข้อมูล
@@ -43,11 +44,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> signUserIn(BuildContext context) async {
     var response = await http.post(
-      AccountService.AuthLogin,
+      AccountService.authLogin,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "email": usernameController.text,
-        "password": passwordController.text,
+        //"email": usernameController.text,
+        //"password": passwordController.text,
+        "email": "sirinat6351@gmail.com",
+        "password": "Tester123456789",
       }),
     );
 
@@ -65,11 +68,11 @@ class _LoginPageState extends State<LoginPage> {
           msg: "Login successfully!",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Color.fromARGB(255, 99, 190, 0));
+          backgroundColor: const Color.fromARGB(255, 99, 190, 0));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MyMainPage(),
+          builder: (context) => const MyMainPage(),
         ),
       );
     } else {
@@ -87,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(

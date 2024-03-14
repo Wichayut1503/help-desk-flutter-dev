@@ -61,7 +61,7 @@ class _ShowListAccountState extends State<ShowListAccount> {
 
   Future<DetailAccount> getDataAccount(String token, int page) async {
     final response = await http.get(
-      AccountService.ListUsers(page, _pageSize, ""),
+      AccountService.listUsers(page, _pageSize, ""),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",

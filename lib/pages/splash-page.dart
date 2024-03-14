@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
             child: Image.asset("assets/images/logo_evt.png"),
           ),
           onAnimationEnd: () => debugPrint("On Fade In End"),
-          nextScreen: LoginPage(),
+          nextScreen: const LoginPage(),
         );
   }
 }
