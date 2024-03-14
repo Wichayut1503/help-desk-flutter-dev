@@ -52,7 +52,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext context) {
-          return  ModalSheet(isSuccess: true, email: usernameController.text);
+          return ModalSheet(isSuccess: true, email: usernameController.text);
         },
       );
     } else {
@@ -60,7 +60,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext context) {
-          return ModalSheet(isSuccess: false, email: usernameController.text,);
+          return ModalSheet(
+            isSuccess: false,
+            email: usernameController.text,
+          );
         },
       );
     }
@@ -106,18 +109,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
               const SizedBox(height: 8),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        'กรุณากรอกอีเมลของคุณ เพื่อเปลี่ยนรหัสผ่าน ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 16),
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'กรุณากรอกอีเมลของคุณ เพื่อเปลี่ยนรหัสผ่าน',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
