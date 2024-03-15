@@ -128,7 +128,7 @@ class _ShowListAccountState extends State<ShowListAccount> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                AccountDetailPage(userId: user.id),
+                                ShowDetailAccountPage(userId: user.id),
                           ),
                         );
                       },

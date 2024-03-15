@@ -28,7 +28,7 @@ class Data {
   String? fullName;
   String? firstName;
   String? lastName;
-  String? phone; // Change Null to String?
+  String? phone;
   String? imagePath;
   int? companyId;
   String? companyName;
@@ -59,7 +59,7 @@ class Data {
     fullName = json['fullName'];
     firstName = json['firstName'];
     lastName = json['lastName'];
-    phone = json['phone']; // Adjust type here
+    phone = json['phone'];
     imagePath = json['imagePath'];
     companyId = json['companyId'];
     companyName = json['companyName'];

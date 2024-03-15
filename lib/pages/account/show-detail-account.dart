@@ -5,16 +5,17 @@ import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/interfaces/Account/account-details.dart';
 import 'package:http/http.dart' as http;
 
-class AccountDetailPage extends StatefulWidget {
+class ShowDetailAccountPage extends StatefulWidget {
   final dynamic userId;
 
-  const AccountDetailPage({Key? key, required this.userId}) : super(key: key);
+  const ShowDetailAccountPage({super.key, required this.userId});
 
   @override
-  _AccountDetailPageState createState() => _AccountDetailPageState();
+  _ShowDetailAccountPageState createState() => _ShowDetailAccountPageState();
 }
 
-class _AccountDetailPageState extends State<AccountDetailPage> {
+class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
+  final bool _status = true;
   AccountDetails? _accountDetails;
   late String _token;
   String? _errorMessage;
@@ -58,31 +59,218 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account Details'),
+        title: const Text('รายละเอียดผู้ใช้'),
       ),
       body: _errorMessage != null
           ? Center(child: Text(_errorMessage!))
           : _accountDetails == null
               ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('ID: ${_accountDetails!.data!.id}'),
-                      Text('Email: ${_accountDetails!.data!.email}'),
-                      Text('Full Name: ${_accountDetails!.data!.fullName}'),
-                      Text('First Name: ${_accountDetails!.data!.firstName}'),
-                      Text('Last Name: ${_accountDetails!.data!.lastName}'),
-                      Text('Phone: ${_accountDetails!.data!.phone}'),
-                      Text('Image Path: ${_accountDetails!.data!.imagePath}'),
-                      Text('Company ID: ${_accountDetails!.data!.companyId}'),
-                      Text('Company Name: ${_accountDetails!.data!.companyName}'),
-                      Text('Role Name: ${_accountDetails!.data!.roleName}'),
-                      Text('Department: ${_accountDetails!.data!.department}'),
-                      Text('Position: ${_accountDetails!.data!.position}'),
-                      Text('Created At: ${_accountDetails!.data!.createdAt}'),
-                    ],
+              : SingleChildScrollView(
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Center(
+                          child: Container(
+                            width: 140.0,
+                            height: 140.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  _accountDetails!.data!.imagePath ??
+                                      'https://isobarscience-1bfd8.kxcdn.com/wp-content/uploads/2020/09/default-profile-picture1.jpg',
+                                ),
+                                fit: BoxFit.cover,
+                                onError: (exception, stackTrace) {
+                                  print('Image failed to load: $exception');
+                                  setState(() {
+                                    _accountDetails!.data!.imagePath =
+                                        'https://isobarscience-1bfd8.kxcdn.com/wp-content/uploads/2020/09/default-profile-picture1.jpg';
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20.0),
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.person_outline,
+                              size: 18.0,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10.0),
+                            Text(
+                              'ข้อมูลส่วนตัว',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Full Name',
+                            hintText: _accountDetails!.data!.fullName ??
+                                '-', // Handle nullable string
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Phone',
+                            hintText: _accountDetails!.data!.phone ??
+                                '-', // Handle nullable string
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Company Name',
+                            hintText: _accountDetails!.data!.companyName ??
+                                '-', // Handle nullable string
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Company Name',
+                            hintText: _accountDetails!.data!.companyName ??
+                                '-', // Handle nullable company name
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Role Name',
+                            hintText: _accountDetails!.data!.roleName ??
+                                '-', // Handle nullable role name
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Department',
+                            hintText: _accountDetails!.data!.department ??
+                                '-', // Handle nullable department
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Position',
+                            hintText: _accountDetails!.data!.position ??
+                                '-', // Handle nullable position
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Created At',
+                            hintText: _accountDetails!.data!.createdAt ??
+                                '-', // Handle nullable creation date
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        const SizedBox(height: 30.0),
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.security,
+                              size: 18.0,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10.0),
+                            Text(
+                              'ความปลอดภัย',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            hintText: _accountDetails!.data!.email ??
+                                '-', // Handle nullable string
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
+                                12.0, 12.0),
+                          ),
+                        ),
+                        const SizedBox(height: 30.0),
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.work,
+                              size: 18.0,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10.0),
+                            Text(
+                              'โครงการที่เข้าร่วม',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                      ],
+                    ),
                   ),
                 ),
     );
