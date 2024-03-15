@@ -1,7 +1,8 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 
-class MyColor {
-  static Color darkColorForLightTheme = 0xff242f60 as Color;
-
-  static final lightColorForDarkTheme = 0xff03DAC5;
-}
+const Color primary = Color.fromARGB(255, 0, 95, 188);
+const Color Secondary = Color(0xFFFF6464);
+const Color mainText = Color(0xFF2E3E5C);
+const Color SecondaryText = Color(0xFF9FA5C0);
+const Color outline = Color(0xFFD0DBEA);
+const Color form = Color(0xFFF4F5F7);

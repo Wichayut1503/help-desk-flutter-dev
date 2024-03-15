@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/account/show-detail-account.dart';
+import 'package:flutter_application_1/components/list_role.dart';
+import 'package:flutter_application_1/components/profile_pic.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/pages/account/show-detail-account.dart';
 import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
 import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/services/global-service.dart';
@@ -15,12 +17,15 @@ class ShowListAccount extends StatefulWidget {
 }
 
 class _ShowListAccountState extends State<ShowListAccount> {
-  static const _pageSize = 1;
+  static const _pageSize = 5;
 
   late PagingController<int, Content> _pagingController;
 
   late TextEditingController searchController;
+  late TextEditingController filterController;
   late String hintText;
+  late String sort;
+  late String activeFilter;
 
   @override
   void initState() {
@@ -30,22 +35,26 @@ class _ShowListAccountState extends State<ShowListAccount> {
       _fetchPage(pageKey);
     });
 
-    // Initialize searchController and hintText
     searchController = TextEditingController();
-    hintText = 'Search';
+    filterController = TextEditingController();
+    hintText = 'Search Name';
+    sort = 'asc';
+    activeFilter = 'ALL';
   }
 
   @override
   void dispose() {
     _pagingController.dispose();
     searchController.dispose();
+    filterController.dispose();
     super.dispose();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems =
-          await getDataAccount(GlobalService().accessToken, pageKey);
+      Uri url = AccountService.ListUsers(pageKey, _pageSize, sort,
+          searchController.text, filterController.text);
+      final newItems = await getDataAccount(GlobalService().accessToken, url);
 
       final isLastPage = newItems.data!.content!.length < _pageSize;
       if (isLastPage) {
@@ -59,9 +68,9 @@ class _ShowListAccountState extends State<ShowListAccount> {
     }
   }
 
-  Future<DetailAccount> getDataAccount(String token, int page) async {
+  Future<DetailAccount> getDataAccount(String token, Uri url) async {
     final response = await http.get(
-      AccountService.ListUsers(page, _pageSize, ""),
+      url,
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",
@@ -69,7 +78,6 @@ class _ShowListAccountState extends State<ShowListAccount> {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       return DetailAccount.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {
@@ -77,43 +85,59 @@ class _ShowListAccountState extends State<ShowListAccount> {
     }
   }
 
+  void _handleSearch(String query) {
+    _pagingController.refresh();
+  }
+
+  void _handleCategorySelected(String category) {
+    setState(() {
+      filterController.text = category;
+    });
+    _handleSearch(filterController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
           'List of Accounts',
           style: TextStyle(color: Colors.black),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.sort),
+            onPressed: () {},
+          ),
+        ],
+        titleSpacing: 25,
+        // flexibleSpace: Container(
+        //   decoration: const BoxDecoration(
+        //     gradient: LinearGradient(
+        //       begin: Alignment.topCenter,
+        //       end: Alignment.bottomCenter,
+        //       colors: [
+        //         Color.fromARGB(255, 14, 44, 75),
+        //         Color.fromARGB(0, 255, 255, 255),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 20),
-
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color.fromARGB(255, 138, 159, 171)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: Color.fromARGB(255, 0, 95, 188)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                fillColor: Colors.white,
-                filled: true,
-                hintText: hintText,
-                hintStyle: const TextStyle(
-                    color: Color.fromARGB(255, 138, 159, 171),
-                    fontWeight: FontWeight.w400),
-              ),
-            ),
-          ),
+          CustomCategoriesList( onCategorySelected: _handleCategorySelected,),
           Expanded(
             child: Container(
               color: Colors.white,
@@ -139,7 +163,12 @@ class _ShowListAccountState extends State<ShowListAccount> {
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: ListTile(
-                          leading: const FlutterLogo(size: 60.0),
+                          leading: const ProfilePic(
+                            imageUrl:
+                                'https://www.w3schools.com/howto/img_avatar.png',
+                            width: 56,
+                            height: 56,
+                          ),
                           title: Text(user.fullName ?? 'Unknown'),
                           subtitle: Text(user.email ?? 'Unknown'),
                           trailing: Text(user.roleName ?? 'Unknown'),
@@ -151,7 +180,7 @@ class _ShowListAccountState extends State<ShowListAccount> {
                     child: Text('Something went wrong!'),
                   ),
                   noItemsFoundIndicatorBuilder: (context) => const Center(
-                    child: Text('No accounts found!'),
+                    child: Text('Not found!'),
                   ),
                   newPageProgressIndicatorBuilder: (_) =>
                       const CircularProgressIndicator(),
@@ -160,6 +189,146 @@ class _ShowListAccountState extends State<ShowListAccount> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate<String> {
+  Future<List<Content>> searchAndFilter(String query) async {
+    if (query.isEmpty) return [];
+
+    try {
+      final String token = GlobalService().accessToken;
+      final Uri url = Uri.parse(
+          'http://dekdee2.informatics.buu.ac.th:8019/api/users?page=0&size=10&sort=&keyword=$query');
+
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = jsonDecode(response.body);
+        final Data data = Data.fromJson(jsonData['data']);
+        return data.content ?? [];
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container(
+      color: Colors.white, // Set background color to white
+      child: FutureBuilder<List<Content>>(
+        future: searchAndFilter(query),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final List<Content> results = snapshot.data ?? [];
+            return ListView.builder(
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                final Content item = results[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: ListTile(
+                    leading: const ProfilePic(
+                      imageUrl:
+                          'https://www.w3schools.com/howto/img_avatar.png',
+                      width: 56,
+                      height: 56,
+                    ),
+                    title: Text(item.fullName ?? 'Unknown'),
+                    subtitle: Text(item.email ?? 'Unknown'),
+                    trailing: Text(item.roleName ?? 'Unknown'),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => DetailAccountPage(userId: item.id),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container(
+      color: Colors.white, // Set background color to white
+      child: FutureBuilder<List<Content>>(
+        future: searchAndFilter(query),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final List<Content> results = snapshot.data ?? [];
+            return ListView.builder(
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                final Content item = results[index];
+                return ListTile(
+                  leading: const ProfilePic(
+                    imageUrl: 'https://www.w3schools.com/howto/img_avatar.png',
+                    width: 56,
+                    height: 56,
+                  ),
+                  title: Text(item.fullName ?? 'Unknown'),
+                  subtitle: Text(item.email ?? 'Unknown'),
+                  trailing: Text(item.roleName ?? 'Unknown'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => DetailAccountPage(userId: item.id),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

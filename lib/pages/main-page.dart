@@ -3,6 +3,7 @@ import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
 import 'package:flutter_application_1/pages/account/show-list-account.dart';
 import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/services/global-service.dart';
+import 'package:flutter_application_1/style/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/account/profile-page.dart';
@@ -31,7 +32,7 @@ class _MyMainPageState extends State<MyMainPage> {
 
             // หน้า Likes
             Container(
-              color: Color.fromARGB(255, 0, 95, 188),
+              color: primary,
               child: const Center(
                 child: Text("Likes Page",
                     style: TextStyle(color: Colors.white, fontSize: 24.0)),
@@ -40,7 +41,7 @@ class _MyMainPageState extends State<MyMainPage> {
 
             // หน้า Search
             Container(
-              color: Color.fromARGB(255, 0, 95, 188),
+              color: primary,
               child: const Center(
                 child: Text("Search Page",
                     style: TextStyle(color: Colors.white, fontSize: 24.0)),
@@ -59,22 +60,22 @@ class _MyMainPageState extends State<MyMainPage> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.home),
               title: const Text("Home"),
-              selectedColor: Color.fromARGB(255, 0, 95, 188)
+              selectedColor: primary
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.favorite_border),
               title: const Text("Likes"),
-              selectedColor: Color.fromARGB(255, 0, 95, 188)
+              selectedColor: primary
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.search),
               title: const Text("Search"),
-              selectedColor: Color.fromARGB(255, 0, 95, 188)
+              selectedColor: primary
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text("Profile"),
-              selectedColor: Color.fromARGB(255, 0, 95, 188),
+              selectedColor: primary
             ),
           ],
         ),
