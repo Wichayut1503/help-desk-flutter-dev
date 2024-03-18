@@ -32,6 +32,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
       if (widget.userId == null) {
         throw Exception('User ID cannot be null');
       }
+      print(_token);
       final response = await http.get(
         AccountService.accountDetails(widget.userId),
         headers: {
@@ -59,7 +60,10 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('รายละเอียดผู้ใช้'),
+        title: const Text(
+          'รายละเอียดผู้ใช้',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: _errorMessage != null
           ? Center(child: Text(_errorMessage!))
@@ -96,6 +100,29 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                           ),
                         ),
                         const SizedBox(height: 20.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _accountDetails!.data!.fullName ?? '-',
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _accountDetails!.data!.companyName ?? '-',
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
                         const Row(
                           children: [
                             Icon(
@@ -116,8 +143,8 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         const SizedBox(height: 20.0),
                         TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
-                            hintText: _accountDetails!.data!.fullName ??
+                            labelText: 'First Name',
+                            hintText: _accountDetails!.data!.firstName ??
                                 '-', // Handle nullable string
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -125,6 +152,21 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                                 color: Color.fromARGB(255, 59, 57, 57)),
                             contentPadding: const EdgeInsets.fromLTRB(
                                 12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Last Name',
+                            hintText: _accountDetails!.data!.lastName ??
+                                '-', // Handle nullable string
+                            enabled: !_status,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(255, 59, 57, 57)),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -138,6 +180,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                                 color: Color.fromARGB(255, 59, 57, 57)),
                             contentPadding: const EdgeInsets.fromLTRB(
                                 12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -151,19 +194,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                                 color: Color.fromARGB(255, 59, 57, 57)),
                             contentPadding: const EdgeInsets.fromLTRB(
                                 12.0, 20.0, 12.0, 12.0),
-                          ),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Company Name',
-                            hintText: _accountDetails!.data!.companyName ??
-                                '-', // Handle nullable company name
-                            enabled: !_status,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -175,8 +206,9 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -188,8 +220,9 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -201,8 +234,9 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         TextFormField(
@@ -214,8 +248,9 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         const SizedBox(height: 30.0),
@@ -246,8 +281,9 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 59, 57, 57)),
-                                contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0,
-                                12.0, 12.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                12.0, 20.0, 12.0, 12.0),
+                            border: InputBorder.none,
                           ),
                         ),
                         const SizedBox(height: 30.0),
