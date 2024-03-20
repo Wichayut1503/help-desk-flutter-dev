@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/global_service.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/interfaces/Account/account_details.dart';
-import 'package:flutter_application_1/interfaces/Account/image_with_token.dart';
+import 'package:flutter_application_1/components/image_with_token.dart';
 import 'package:http/http.dart' as http;
 
 class ShowDetailAccountPage extends StatefulWidget {
@@ -12,7 +12,7 @@ class ShowDetailAccountPage extends StatefulWidget {
   const ShowDetailAccountPage({super.key, required this.userId});
 
   @override
-  _ShowDetailAccountPageState createState() => _ShowDetailAccountPageState();
+  State<ShowDetailAccountPage> createState() => _ShowDetailAccountPageState();
 }
 
 class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {

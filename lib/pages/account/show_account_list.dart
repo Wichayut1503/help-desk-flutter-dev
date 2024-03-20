@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/account/show_detail_account.dart';
+import 'package:flutter_application_1/pages/account/show_account_details.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/interfaces/Account/detail_account.dart';
 import 'package:flutter_application_1/services/account_service.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_application_1/services/global_service.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ShowListAccount extends StatefulWidget {
-  const ShowListAccount({Key? key}) : super(key: key);
+  const ShowListAccount({super.key});
 
   @override
   State<ShowListAccount> createState() => _ShowListAccountState();

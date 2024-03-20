@@ -9,7 +9,7 @@ import 'package:flutter_application_1/components/profile_menu.dart';
 import 'package:flutter_application_1/components/profile_pic.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();

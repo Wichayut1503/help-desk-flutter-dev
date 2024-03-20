@@ -11,7 +11,7 @@ class ImageWithToken extends StatefulWidget {
       {super.key, required this.imageUrl, required this.token});
 
   @override
-  _ImageWithTokenState createState() => _ImageWithTokenState();
+  State<ImageWithToken> createState() => _ImageWithTokenState();
 }
 
 class _ImageWithTokenState extends State<ImageWithToken> {
@@ -50,15 +50,14 @@ class CircularImageWithToken extends StatefulWidget {
   final String token;
   final double radius;
 
-  const CircularImageWithToken({
-    super.key,
-    required this.imageUrl,
-    required this.token,
-    required this.radius
-  });
+  const CircularImageWithToken(
+      {super.key,
+      required this.imageUrl,
+      required this.token,
+      required this.radius});
 
   @override
-  _CircularImageWithTokenState createState() => _CircularImageWithTokenState();
+  State<CircularImageWithToken> createState() => _CircularImageWithTokenState();
 }
 
 class _CircularImageWithTokenState extends State<CircularImageWithToken> {

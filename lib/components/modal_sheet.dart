@@ -14,8 +14,7 @@ class ModalSheet extends StatelessWidget {
         isSuccess ? "assets/images/correct.png" : "assets/images/cancel.png";
     String title = isSuccess ? "ตรวจสอบอีเมล" : "ไม่พบอีเมลในระบบ";
     String subTitle = isSuccess
-        ? '''ระบบได้ส่งข้อความไปยังอีเมล $email
-กรุณาตรวจสอบอีเมล เพื่อเปลี่ยนรหัสผ่าน'''
+        ? '''ระบบได้ส่งข้อความไปยังอีเมล $email กรุณาตรวจสอบอีเมล เพื่อเปลี่ยนรหัสผ่าน'''
         : "อีเมล $email ไม่พบในระบบ กรุณาลองใหม่อีกครั้ง";
     final titleText = Text(
       title,
