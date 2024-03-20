@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/global-service.dart';
 import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/interfaces/Account/account-details.dart';
+import 'package:flutter_application_1/interfaces/Account/image-with-token.dart';
 import 'package:http/http.dart' as http;
 
 class ShowDetailAccountPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
       if (response.statusCode == 200) {
         setState(() {
           _accountDetails = AccountDetails.fromJson(json.decode(response.body));
-          _errorMessage = null; // Reset error message if successful
+          _errorMessage = null;
         });
       } else {
         throw Exception('Failed to load account details');
@@ -77,27 +78,39 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Center(
-                          child: Container(
+                          /*child: Container(
                             width: 140.0,
                             height: 140.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  _accountDetails!.data!.imagePath ??
-                                      'https://isobarscience-1bfd8.kxcdn.com/wp-content/uploads/2020/09/default-profile-picture1.jpg',
+                                  AccountService.userImage(
+                                          _accountDetails?.data?.imagePath) ??
+                                      '',
                                 ),
                                 fit: BoxFit.cover,
                                 onError: (exception, stackTrace) {
                                   print('Image failed to load: $exception');
                                   setState(() {
                                     _accountDetails!.data!.imagePath =
-                                        'https://isobarscience-1bfd8.kxcdn.com/wp-content/uploads/2020/09/default-profile-picture1.jpg';
+                                        AccountService.getDefaultImageUrl();
                                   });
                                 },
                               ),
                             ),
-                          ),
+                          ),*/
+                          child: _accountDetails!.data!.imagePath != null
+                              ? ImageWithToken(
+                                  imageUrl: AccountService.userImage(
+                                          _accountDetails!.data!.imagePath!) ??
+                                      '',
+                                  token: _token,
+                                )
+                              : const CircleAvatar(
+                                  radius: 70,
+                                  child: Icon(Icons.person, size: 70),
+                                ),
                         ),
                         const SizedBox(height: 20.0),
                         Row(
@@ -144,8 +157,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'First Name',
-                            hintText: _accountDetails!.data!.firstName ??
-                                '-', // Handle nullable string
+                            hintText: _accountDetails!.data!.firstName ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -158,8 +170,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Last Name',
-                            hintText: _accountDetails!.data!.lastName ??
-                                '-', // Handle nullable string
+                            hintText: _accountDetails!.data!.lastName ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -172,8 +183,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Phone',
-                            hintText: _accountDetails!.data!.phone ??
-                                '-', // Handle nullable string
+                            hintText: _accountDetails!.data!.phone ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -186,8 +196,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Company Name',
-                            hintText: _accountDetails!.data!.companyName ??
-                                '-', // Handle nullable string
+                            hintText: _accountDetails!.data!.companyName ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -200,8 +209,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Role Name',
-                            hintText: _accountDetails!.data!.roleName ??
-                                '-', // Handle nullable role name
+                            hintText: _accountDetails!.data!.roleName ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -214,8 +222,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Department',
-                            hintText: _accountDetails!.data!.department ??
-                                '-', // Handle nullable department
+                            hintText: _accountDetails!.data!.department ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -228,8 +235,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Position',
-                            hintText: _accountDetails!.data!.position ??
-                                '-', // Handle nullable position
+                            hintText: _accountDetails!.data!.position ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -242,8 +248,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Created At',
-                            hintText: _accountDetails!.data!.createdAt ??
-                                '-', // Handle nullable creation date
+                            hintText: _accountDetails!.data!.createdAt ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
@@ -275,8 +280,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Email',
-                            hintText: _accountDetails!.data!.email ??
-                                '-', // Handle nullable string
+                            hintText: _accountDetails!.data!.email ?? '-',
                             enabled: !_status,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintStyle: const TextStyle(
