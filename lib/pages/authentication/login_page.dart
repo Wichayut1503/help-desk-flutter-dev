@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
 import 'package:flutter_application_1/components/textfield.dart';
-import 'package:flutter_application_1/pages/authentication/forgot-password-page.dart';
-import 'package:flutter_application_1/pages/main-page.dart';
-import 'package:flutter_application_1/services/account-service.dart';
-import 'package:flutter_application_1/services/global-service.dart';
+import 'package:flutter_application_1/pages/authentication/forgot_password-page.dart';
+import 'package:flutter_application_1/pages/main_page.dart';
+import 'package:flutter_application_1/services/account_service.dart';
+import 'package:flutter_application_1/services/global_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';

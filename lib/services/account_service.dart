@@ -1,8 +1,5 @@
-import 'package:http/http.dart' as http;
-
 class AccountService {
   static const String baseUrl = "http://dekdee2.informatics.buu.ac.th:8019/api";
-  //static const String baseUrl = "http://45.139.226.116:8080/api";
   static const String defaultImageUrl =
       "https://isobarscience-1bfd8.kxcdn.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
 

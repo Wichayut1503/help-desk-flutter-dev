@@ -5,8 +5,6 @@ import 'package:flutter_application_1/components/my_button.dart';
 import 'package:email_validator/email_validator.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_application_1/pages/main-page.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});

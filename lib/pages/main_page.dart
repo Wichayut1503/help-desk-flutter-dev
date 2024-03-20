@@ -1,12 +1,6 @@
-import 'dart:convert';
-import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
-import 'package:flutter_application_1/pages/account/show-list-account.dart';
-import 'package:flutter_application_1/services/account-service.dart';
-import 'package:flutter_application_1/services/global-service.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/pages/account/show_list_account.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/account/profile-page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_application_1/pages/account/profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MyMainPage extends StatefulWidget {

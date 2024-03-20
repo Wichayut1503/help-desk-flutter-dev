@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/global-service.dart';
-import 'package:flutter_application_1/services/account-service.dart';
-import 'package:flutter_application_1/interfaces/Account/account-details.dart';
-import 'package:flutter_application_1/interfaces/Account/image-with-token.dart';
+import 'package:flutter_application_1/services/global_service.dart';
+import 'package:flutter_application_1/services/account_service.dart';
+import 'package:flutter_application_1/interfaces/Account/account_details.dart';
+import 'package:flutter_application_1/components/image_with_token.dart';
 import 'package:http/http.dart' as http;
 
 class ShowDetailAccountPage extends StatefulWidget {
@@ -78,38 +78,17 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Center(
-                          /*child: Container(
-                            width: 140.0,
-                            height: 140.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  AccountService.userImage(
-                                          _accountDetails?.data?.imagePath) ??
-                                      '',
-                                ),
-                                fit: BoxFit.cover,
-                                onError: (exception, stackTrace) {
-                                  print('Image failed to load: $exception');
-                                  setState(() {
-                                    _accountDetails!.data!.imagePath =
-                                        AccountService.getDefaultImageUrl();
-                                  });
-                                },
-                              ),
-                            ),
-                          ),*/
                           child: _accountDetails!.data!.imagePath != null
-                              ? ImageWithToken(
+                              ? CircularImageWithToken(
                                   imageUrl: AccountService.userImage(
                                           _accountDetails!.data!.imagePath!) ??
                                       '',
                                   token: _token,
+                                  radius: 90,
                                 )
                               : const CircleAvatar(
-                                  radius: 70,
-                                  child: Icon(Icons.person, size: 70),
+                                  radius: 90,
+                                  child: Icon(Icons.person, size: 90),
                                 ),
                         ),
                         const SizedBox(height: 20.0),
@@ -153,7 +132,6 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20.0),
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'First Name',
@@ -276,7 +254,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 10.0),
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Email',
@@ -290,7 +268,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             border: InputBorder.none,
                           ),
                         ),
-                        const SizedBox(height: 30.0),
+                        const SizedBox(height: 20.0),
                         const Row(
                           children: [
                             Icon(
