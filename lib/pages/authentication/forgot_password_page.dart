@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/modal_sheet.dart';
 import 'package:flutter_application_1/components/textfield.dart';
 import 'package:flutter_application_1/components/my_button.dart';
+import 'package:flutter_application_1/services/account_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,20 +15,18 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  final apiUrl = Uri.parse(
-      "http://dekdee2.informatics.buu.ac.th:8019/api/auth/forget-password");
+  final apiUrl = AccountService.forgetPassword;
   final usernameController = TextEditingController();
   int status = 200;
   bool isButtonActive = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  //! เอาไว้เช็คค่าของช่องกรอกข้อมูล
   @override
   void initState() {
     super.initState();
     usernameController.addListener(_checkInput);
   }
 
-  //! เอาไว้เช็คค่าของช่องกรอกข้อมูล
   void _checkInput() {
     setState(() {
       isButtonActive = usernameController.text.isNotEmpty &&
@@ -35,7 +34,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     });
   }
 
-  Future<void> postEmail(BuildContext context) async {
+  Future<void> postEmail() async {
     var response = await http.post(
       apiUrl,
       headers: {"Content-Type": "application/json"},
@@ -48,7 +47,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     if (response.statusCode == 202) {
       showModalBottomSheet<void>(
         backgroundColor: Colors.white,
-        context: context,
+        context: _scaffoldKey.currentContext!,
         builder: (BuildContext context) {
           return ModalSheet(isSuccess: true, email: usernameController.text);
         },
@@ -56,7 +55,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     } else {
       showModalBottomSheet<void>(
         backgroundColor: Colors.white,
-        context: context,
+        context: _scaffoldKey.currentContext!,
         builder: (BuildContext context) {
           return ModalSheet(
             isSuccess: false,
@@ -73,6 +72,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -128,7 +128,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
               const SizedBox(height: 25),
               MyButton(
-                onTap: () => postEmail(context),
+                onTap: () => postEmail(),
                 isEnabled: isButtonActive,
                 btnName: "ยืนยัน",
               ),

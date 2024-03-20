@@ -3,19 +3,20 @@ class AccountService {
 
   static Uri authLogin = Uri.parse("$baseUrl/auth/login");
   static Uri myAccount = Uri.parse("$baseUrl/users/detail");
+  static Uri forgetPassword = Uri.parse("$baseUrl/auth/forget-password");
 
-  static Uri accountDetails(int userId) {
+  static Uri getAccountDetails(int userId) {
     return Uri.parse("$baseUrl/users/$userId");
   }
 
-  static String? userImage(String? imagePath) {
+  static String? getUserImage(String? imagePath) {
     if (imagePath != null && imagePath.isNotEmpty) {
       return "$baseUrl/images/$imagePath";
     }
     return imagePath;
   }
 
-  static Uri listUsers(int page, int size, String sort) {
+  static Uri getUserList(int page, int size, String sort) {
     return Uri.parse("$baseUrl/users?page=$page&size=$size&sort=$sort");
   }
 }

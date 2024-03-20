@@ -36,7 +36,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
       }
       print(_token);
       final response = await http.get(
-        AccountService.accountDetails(widget.userId),
+        AccountService.getAccountDetails(widget.userId),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $_token",
@@ -81,7 +81,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                         Center(
                           child: _accountDetails!.data!.imagePath != null
                               ? CircularImageWithToken(
-                                  imageUrl: AccountService.userImage(
+                                  imageUrl: AccountService.getUserImage(
                                           _accountDetails!.data!.imagePath!) ??
                                       '',
                                   token: _token,

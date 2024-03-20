@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
 import 'package:flutter_application_1/components/textfield.dart';
-import 'package:flutter_application_1/pages/authentication/forgot_password-page.dart';
+import 'package:flutter_application_1/pages/authentication/forgot_password_page.dart';
 import 'package:flutter_application_1/pages/main_page.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/services/global_service.dart';
@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -22,17 +22,16 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   int status = 200;
   bool isButtonActive = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-//! เอาไว้เช็คค่าของช่องกรอกข้อมูล
   @override
   void initState() {
     super.initState();
-    //usernameController.addListener(_checkInput);
-    //passwordController.addListener(_checkInput);
-    isButtonActive = true;
+    usernameController.addListener(_checkInput);
+    passwordController.addListener(_checkInput);
+    //isButtonActive = true;
   }
 
-  //! เอาไว้เช็คค่าของช่องกรอกข้อมูล
   void _checkInput() {
     setState(() {
       isButtonActive = usernameController.text.isNotEmpty &&
@@ -42,23 +41,21 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Future<void> signUserIn(BuildContext context) async {
+  Future<void> signUserIn() async {
     var response = await http.post(
       AccountService.authLogin,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        //"email": usernameController.text,
-        //"password": passwordController.text,
-        "email": "sirinat6351@gmail.com",
-        "password": "Tester123456789",
+        "email": usernameController.text,
+        "password": passwordController.text,
+        //"email": "sirinat6351@gmail.com",
+        //"password": "Tester123456789",
       }),
     );
 
     if (response.statusCode == 200) {
       String jsonString = response.body;
-
       Map<String, dynamic> data = json.decode(jsonString);
-
       String accessToken = data['data']['accessToken'];
       GlobalService().accessToken = accessToken;
       setState(() {
@@ -70,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           gravity: ToastGravity.BOTTOM,
           backgroundColor: const Color.fromARGB(255, 99, 190, 0));
       Navigator.pushReplacement(
-        context,
+        _scaffoldKey.currentContext!,
         MaterialPageRoute(
           builder: (context) => const MyMainPage(),
         ),
@@ -90,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -179,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 25),
                 MyButton(
-                  onTap: () => signUserIn(context),
+                  onTap: () => signUserIn(),
                   isEnabled: isButtonActive,
                 ),
                 const SizedBox(height: 25),

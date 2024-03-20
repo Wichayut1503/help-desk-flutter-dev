@@ -42,7 +42,7 @@ class _MyMainPageState extends State<MyMainPage> {
             ),
 
             // หน้า Profile
-            ProfilePage(),
+            const ProfilePage(),
           ],
         ),
         bottomNavigationBar: SalomonBottomBar(
