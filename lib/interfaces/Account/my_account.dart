@@ -28,7 +28,7 @@ class Data {
   String? fullName;
   String? firstName;
   String? lastName;
-  Null? phone;
+  String? phone;
   String? imagePath;
   int? companyId;
   String? companyName;

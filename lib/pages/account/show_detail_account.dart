@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/global_service.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/interfaces/Account/account_details.dart';
-import 'package:flutter_application_1/components/image_with_token.dart';
+import 'package:flutter_application_1/interfaces/Account/image_with_token.dart';
 import 'package:http/http.dart' as http;
 
 class ShowDetailAccountPage extends StatefulWidget {
@@ -20,6 +20,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
   AccountDetails? _accountDetails;
   late String _token;
   String? _errorMessage;
+  static const double _radius = 90;
 
   @override
   void initState() {
@@ -84,11 +85,27 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                                           _accountDetails!.data!.imagePath!) ??
                                       '',
                                   token: _token,
-                                  radius: 90,
+                                  radius: _radius,
                                 )
-                              : const CircleAvatar(
-                                  radius: 90,
-                                  child: Icon(Icons.person, size: 90),
+                              : Container(
+                                  width: _radius * 2,
+                                  height: _radius * 2,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: const CircleAvatar(
+                                    radius: _radius,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      Icons.person,
+                                      size: _radius,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
                                 ),
                         ),
                         const SizedBox(height: 20.0),
