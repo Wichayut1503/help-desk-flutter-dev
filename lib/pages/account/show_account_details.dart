@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/global_service.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/interfaces/Account/account_details.dart';
+import 'package:flutter_application_1/interfaces/Account/user_project.dart';
 import 'package:flutter_application_1/components/image_with_token.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,7 @@ class ShowDetailAccountPage extends StatefulWidget {
 class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
   final bool _status = true;
   AccountDetails? _accountDetails;
+  List<UserProject> _userProjects = [];
   late String _token;
   String? _errorMessage;
   static const double _radius = 90;
@@ -27,6 +29,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
     super.initState();
     _token = GlobalService().accessToken;
     fetchAccountDetails();
+    fetchUserProjects();
   }
 
   Future<void> fetchAccountDetails() async {
@@ -58,6 +61,32 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
     }
   }
 
+  Future<void> fetchUserProjects() async {
+    try {
+      final response = await http.get(
+        AccountService.getUserProjects(widget.userId),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $_token",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        String responseBody = utf8.decode(response.bodyBytes);
+        Map<String, dynamic> decodedData = json.decode(responseBody);
+        List<dynamic> projectsJson = decodedData['content'];
+        setState(() {
+          _userProjects =
+              projectsJson.map((json) => UserProject.fromJson(json)).toList();
+        });
+      } else {
+        throw Exception('Failed to load user projects');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,35 +108,30 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Center(
-                          child: _accountDetails!.data!.imagePath != null
-                              ? CircularImageWithToken(
-                                  imageUrl: AccountService.getUserImage(
-                                          _accountDetails!.data!.imagePath!) ??
-                                      '',
-                                  token: _token,
-                                  radius: _radius,
-                                )
-                              : Container(
-                                  width: _radius * 2,
-                                  height: _radius * 2,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: const CircleAvatar(
+                            child: _accountDetails!.data!.imagePath != null
+                                ? CircularImageWithToken(
+                                    imageUrl: AccountService.getUserImage(
+                                            _accountDetails!
+                                                .data!.imagePath!) ??
+                                        '',
+                                    token: _token,
                                     radius: _radius,
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                      Icons.person,
-                                      size: _radius,
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
                                       color: Colors.blue,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 1,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                        ),
+                                    child: const Icon(
+                                      Icons.person,
+                                      size: _radius * 2,
+                                      color: Colors.white,
+                                    ),
+                                  )),
                         const SizedBox(height: 20.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -303,7 +327,55 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 10.0),
+                        _userProjects.isEmpty
+                            ? const Padding(
+                                padding: EdgeInsets.only(left: 10.0, top: 10.0),
+                                child: Text(
+                                  'ไม่มีโครงการที่เข้าร่วม',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: _userProjects.length,
+                                itemBuilder: (context, index) {
+                                  final project = _userProjects[index];
+                                  Icon statusIcon;
+                                  String statusDescription;
+                                  switch (project.status) {
+                                    case 'ACTIVE':
+                                      statusIcon = const Icon(
+                                          Icons.check_circle,
+                                          color: Colors.green);
+                                      statusDescription = 'เข้าร่วม';
+                                      break;
+                                    case 'IN_ACTIVE':
+                                      statusIcon = const Icon(
+                                          Icons.remove_circle,
+                                          color: Colors.grey);
+                                      statusDescription = 'สิ้นสุด';
+                                      break;
+                                    default:
+                                      statusIcon = const Icon(Icons.info,
+                                          color: Colors.grey);
+                                      statusDescription = 'Unknown';
+                                  }
+                                  return ListTile(
+                                    leading: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        statusIcon,
+                                      ],
+                                    ),
+                                    title: Text(project.name),
+                                    subtitle: Text(statusDescription),
+                                    onTap: () {
+                                      // Handle project tap
+                                    },
+                                  );
+                                },
+                              ),
                       ],
                     ),
                   ),

@@ -16,6 +16,10 @@ class AccountService {
     return imagePath;
   }
 
+  static Uri getUserProjects(int userId) {
+    return Uri.parse("$baseUrl/projects/user-project/$userId");
+  }
+
   static Uri getUserList(int page, int size, String sort) {
     return Uri.parse("$baseUrl/users?page=$page&size=$size&sort=$sort");
   }

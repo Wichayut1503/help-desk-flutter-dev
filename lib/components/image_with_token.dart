@@ -104,27 +104,27 @@ class _CircularImageWithTokenState extends State<CircularImageWithToken> {
         child: _loadingFailed // Fail to load image
             ? Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue, // Background color
+                  color: Colors.blue,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.black, // Border color
-                    width: 1, // Border width
+                    color: Colors.black,
+                    width: 1,
                   ),
                 ),
                 child: Icon(
                   Icons.person,
                   size: widget.radius * 2,
-                  color: Colors.white, // Icon color
+                  color: Colors.white,
                 ),
               )
             : _imageBase64 != null
                 ? Container(
                     decoration: BoxDecoration(
-                      color: Colors.white, // Background color
+                      color: Colors.white,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.black, // Border color
-                        width: 1, // Border width
+                        color: Colors.black,
+                        width: 1,
                       ),
                     ),
                     child: Image.memory(
