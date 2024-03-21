@@ -5,7 +5,7 @@ import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/interfaces/Account/account_details.dart';
 import 'package:flutter_application_1/interfaces/Account/user_project.dart';
 import 'package:flutter_application_1/components/image_token.dart';
-import 'package:flutter_application_1/components/modal_sheet_account_error.dart';
+import 'package:flutter_application_1/components/modal_sheet_error.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -97,7 +97,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
         showModalBottomSheet(
           context: context,
           builder: (BuildContext context) {
-            return ModalSheetAccountError(errorMessage: _errorMessage!);
+            return ModalSheetError(errorMessage: _errorMessage!);
           },
         );
       });

@@ -27,8 +27,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    usernameController.addListener(_checkInput);
-    passwordController.addListener(_checkInput);
+    //usernameController.addListener(_checkInput);
+    //passwordController.addListener(_checkInput);
+    isButtonActive = true;
   }
 
   void _checkInput() {
@@ -45,8 +46,10 @@ class _LoginPageState extends State<LoginPage> {
       AccountService.authLogin,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "email": usernameController.text,
-        "password": passwordController.text,
+        //"email": usernameController.text,
+        //"password": passwordController.text,
+        "email": "sirinat6351@gmail.com",
+        "password": "Tester123456789",
       }),
     );
 
