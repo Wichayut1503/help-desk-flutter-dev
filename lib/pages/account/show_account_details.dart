@@ -75,7 +75,8 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
       );
 
       if (response.statusCode == 200) {
-        String responseBody = utf8.decode(response.bodyBytes);
+        String responseBody =
+            utf8.decode(response.bodyBytes); // แก้ให้แสดงภาษาไทยถูกต้อง
         Map<String, dynamic> decodedData = json.decode(responseBody);
         List<dynamic> projectsJson = decodedData['content'];
         setState(() {
@@ -95,6 +96,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
       _isErrorModalShown = true;
       Future.delayed(Duration.zero, () {
         showModalBottomSheet(
+          enableDrag: false,
           context: context,
           builder: (BuildContext context) {
             return ModalSheetError(errorMessage: _errorMessage!);
