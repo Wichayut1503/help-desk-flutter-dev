@@ -4,7 +4,9 @@ import 'package:flutter_application_1/services/global_service.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/interfaces/Account/account_details.dart';
 import 'package:flutter_application_1/interfaces/Account/user_project.dart';
-import 'package:flutter_application_1/components/image_with_token.dart';
+import 'package:flutter_application_1/components/image_token.dart';
+import 'package:flutter_application_1/components/modal_sheet_account_error.dart';
+
 import 'package:http/http.dart' as http;
 
 class ShowDetailAccountPage extends StatefulWidget {
@@ -23,6 +25,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
   late String _token;
   String? _errorMessage;
   static const double _radius = 90;
+  bool _isErrorModalShown = false;
 
   @override
   void initState() {
@@ -87,6 +90,21 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
     }
   }
 
+  Widget _buildErrorModal(BuildContext context) {
+    if (!_isErrorModalShown) {
+      _isErrorModalShown = true;
+      Future.delayed(Duration.zero, () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return ModalSheetAccountError(errorMessage: _errorMessage!);
+          },
+        );
+      });
+    }
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +115,7 @@ class _ShowDetailAccountPageState extends State<ShowDetailAccountPage> {
         ),
       ),
       body: _errorMessage != null
-          ? Center(child: Text(_errorMessage!))
+          ? _buildErrorModal(context)
           : _accountDetails == null
               ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(

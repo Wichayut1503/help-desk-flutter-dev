@@ -21,7 +21,7 @@ class _MyMainPageState extends State<MyMainPage> {
           index: _currentIndex,
           children: [
             // หน้า ShowList
-            const ShowListAccount(),
+            const ShowAccountList(),
 
             // หน้า Likes
             Container(

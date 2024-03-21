@@ -7,14 +7,14 @@ import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/services/global_service.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class ShowListAccount extends StatefulWidget {
-  const ShowListAccount({super.key});
+class ShowAccountList extends StatefulWidget {
+  const ShowAccountList({super.key});
 
   @override
-  State<ShowListAccount> createState() => _ShowListAccountState();
+  State<ShowAccountList> createState() => _ShowAccountListState();
 }
 
-class _ShowListAccountState extends State<ShowListAccount> {
+class _ShowAccountListState extends State<ShowAccountList> {
   static const _pageSize = 1;
 
   late PagingController<int, Content> _pagingController;
