@@ -9,4 +9,7 @@ class GlobalService {
 
   String accessToken = '';
 
+  void logout() {
+    accessToken = '';
+  }
 }

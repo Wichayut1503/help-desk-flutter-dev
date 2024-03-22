@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/interfaces/Account/my-account.dart';
+import 'package:flutter_application_1/pages/authentication/login-page.dart';
 import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/services/global-service.dart';
 import 'package:http/http.dart' as http;
@@ -35,11 +35,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (response.statusCode == 200) {
       print(response.body);
-      return MyAccount.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
+      return MyAccount.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception("Failed to load");
     }
+  }
+
+  void _handleLogout(BuildContext context) {
+    GlobalService().logout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -64,11 +71,11 @@ class _ProfilePageState extends State<ProfilePage> {
               return Column(
                 children: [
                   const SizedBox(height: 16),
-                  ProfilePic(
-                    imageUrl: 'https://scontent.futp1-2.fna.fbcdn.net/v/t1.6435-1/107668505_910667609453715_3947543465436588929_n.jpg?stp=dst-jpg_p480x480&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aVOiVL5W0GYAX8CoXYI&_nc_ht=scontent.futp1-2.fna&oh=00_AfAkcU019ueVtn9PpccAkX9F8Elyj0b4Y8sTxYfI8Aiwlw&oe=6617EEB0',
+                  const ProfilePic(
+                    imageUrl:
+                        'https://scontent.futp1-2.fna.fbcdn.net/v/t1.6435-1/107668505_910667609453715_3947543465436588929_n.jpg?stp=dst-jpg_p480x480&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aVOiVL5W0GYAX8CoXYI&_nc_ht=scontent.futp1-2.fna&oh=00_AfAkcU019ueVtn9PpccAkX9F8Elyj0b4Y8sTxYfI8Aiwlw&oe=6617EEB0',
                     width: 176,
                     height: 176,
-                    
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
@@ -91,7 +98,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileMenu(
                     text: "Log Out",
                     icon: "assets/images/logout.png",
-                    press: () {},
+                    press: () {
+                      _handleLogout(context);
+                    },
                   ),
                 ],
               );

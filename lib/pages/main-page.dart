@@ -30,15 +30,6 @@ class _MyMainPageState extends State<MyMainPage> {
             // หน้า ShowList
             const ShowListAccount(),
 
-            // หน้า Likes
-            Container(
-              color: primary,
-              child: const Center(
-                child: Text("Likes Page",
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
-              ),
-            ),
-
             // หน้า Search
             Container(
               color: primary,
@@ -58,13 +49,8 @@ class _MyMainPageState extends State<MyMainPage> {
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
             SalomonBottomBarItem(
-              icon: const Icon(Icons.home),
-              title: const Text("Home"),
-              selectedColor: primary
-            ),
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.favorite_border),
-              title: const Text("Likes"),
+              icon: const Icon(Icons.group),
+              title: const Text("Account"),
               selectedColor: primary
             ),
             SalomonBottomBarItem(

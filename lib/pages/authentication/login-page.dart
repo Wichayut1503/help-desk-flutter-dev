@@ -53,9 +53,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.statusCode == 200) {
       String jsonString = response.body;
-
       Map<String, dynamic> data = json.decode(jsonString);
-
       String accessToken = data['data']['accessToken'];
       GlobalService().accessToken = accessToken;
       setState(() {

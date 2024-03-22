@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/list_role.dart';
 import 'package:flutter_application_1/components/profile_pic.dart';
+import 'package:flutter_application_1/adsmob/ad_helper.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/pages/account/show-detail-account.dart';
 import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
@@ -26,6 +28,11 @@ class _ShowListAccountState extends State<ShowListAccount> {
   late String hintText;
   late String sort;
   late String activeFilter;
+  String _sortOrder = 'asc';
+  bool isSortAscending = true;
+
+
+  BannerAd? _bannerAd;
 
   @override
   void initState() {
@@ -38,8 +45,30 @@ class _ShowListAccountState extends State<ShowListAccount> {
     searchController = TextEditingController();
     filterController = TextEditingController();
     hintText = 'Search Name';
-    sort = 'asc';
-    activeFilter = 'ALL';
+    sort = 'userDetail.firstName,';
+
+    BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+  }
+
+  Widget buildLoadingIndicator() {
+    return Center(
+      child: Image.asset('assets/gif/search.gif'),
+    );
   }
 
   @override
@@ -47,6 +76,7 @@ class _ShowListAccountState extends State<ShowListAccount> {
     _pagingController.dispose();
     searchController.dispose();
     filterController.dispose();
+    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -96,6 +126,15 @@ class _ShowListAccountState extends State<ShowListAccount> {
     _handleSearch(filterController.text);
   }
 
+  void _handleSort() {
+    setState(() {
+      isSortAscending = !isSortAscending;
+      _sortOrder = _sortOrder == 'asc' ? 'desc' : 'asc';
+      sort = 'userDetail.firstName,$_sortOrder';
+    });
+    _pagingController.refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,27 +156,26 @@ class _ShowListAccountState extends State<ShowListAccount> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.sort),
-            onPressed: () {},
+            icon: const Icon(Icons.sort_rounded),
+             color: isSortAscending ? Colors.black : Colors.blue[700],
+            onPressed: _handleSort, // Call sort handler
           ),
         ],
         titleSpacing: 25,
-        // flexibleSpace: Container(
-        //   decoration: const BoxDecoration(
-        //     gradient: LinearGradient(
-        //       begin: Alignment.topCenter,
-        //       end: Alignment.bottomCenter,
-        //       colors: [
-        //         Color.fromARGB(255, 14, 44, 75),
-        //         Color.fromARGB(0, 255, 255, 255),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ),
       body: Column(
         children: [
-          CustomCategoriesList( onCategorySelected: _handleCategorySelected,),
+          if (_bannerAd != null)
+            Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                height: _bannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAd!),
+              ),
+            ),
+          CustomCategoriesList(
+            onCategorySelected: _handleCategorySelected,
+          ),
           Expanded(
             child: Container(
               color: Colors.white,
@@ -156,22 +194,25 @@ class _ShowListAccountState extends State<ShowListAccount> {
                           ),
                         );
                       },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: ListTile(
-                          leading: const ProfilePic(
-                            imageUrl:
-                                'https://www.w3schools.com/howto/img_avatar.png',
-                            width: 56,
-                            height: 56,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
-                          title: Text(user.fullName ?? 'Unknown'),
-                          subtitle: Text(user.email ?? 'Unknown'),
-                          trailing: Text(user.roleName ?? 'Unknown'),
+                          child: ListTile(
+                            leading: const ProfilePic(
+                              imageUrl:
+                                  'https://www.w3schools.com/howto/img_avatar.png',
+                              width: 56,
+                              height: 56,
+                            ),
+                            title: Text(user.fullName ?? 'Unknown'),
+                            subtitle: Text(user.email ?? 'Unknown'),
+                            trailing: Text(user.roleName ?? 'Unknown',style: TextStyle(color: Colors.grey),),
+                          ),
                         ),
                       ),
                     );
@@ -184,6 +225,8 @@ class _ShowListAccountState extends State<ShowListAccount> {
                   ),
                   newPageProgressIndicatorBuilder: (_) =>
                       const CircularProgressIndicator(),
+                  firstPageProgressIndicatorBuilder: (_) =>
+                      buildLoadingIndicator(),
                 ),
               ),
             ),
@@ -193,6 +236,7 @@ class _ShowListAccountState extends State<ShowListAccount> {
     );
   }
 }
+
 
 class CustomSearchDelegate extends SearchDelegate<String> {
   Future<List<Content>> searchAndFilter(String query) async {
@@ -245,15 +289,21 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     ];
   }
 
+  Widget buildLoadingIndicator() {
+    return Center(
+      child: Image.asset('assets/gif/search.gif'),
+    );
+  }
+
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container(
-      color: Colors.white, // Set background color to white
+      color: Colors.white,
       child: FutureBuilder<List<Content>>(
         future: searchAndFilter(query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return buildLoadingIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -294,12 +344,12 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     return Container(
-      color: Colors.white, // Set background color to white
+      color: Colors.white,
       child: FutureBuilder<List<Content>>(
         future: searchAndFilter(query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return buildLoadingIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
