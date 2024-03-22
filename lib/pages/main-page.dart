@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_application_1/interfaces/Account/detail-account.dart';
 import 'package:flutter_application_1/pages/account/show-list-account.dart';
+import 'package:flutter_application_1/pages/project/show-list-project.dart';
 import 'package:flutter_application_1/services/account-service.dart';
 import 'package:flutter_application_1/services/global-service.dart';
 import 'package:flutter_application_1/style/colors.dart';
@@ -32,11 +33,7 @@ class _MyMainPageState extends State<MyMainPage> {
 
             // หน้า Likes
             Container(
-              color: primary,
-              child: const Center(
-                child: Text("Likes Page",
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
-              ),
+              child: const ShowListProject(),
             ),
 
             // หน้า Search
