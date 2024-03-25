@@ -20,7 +20,8 @@ class AccountService {
     return Uri.parse("$baseUrl/projects/user-project/$userId");
   }
 
-  static Uri getUserList(int page, int size, String sort) {
-    return Uri.parse("$baseUrl/users?page=$page&size=$size&sort=$sort");
+  static Uri getUserList(int page, int size, String sort, String keyword, String roleID) {
+    return Uri.parse("$baseUrl/users?page=$page&size=$size&sort=$sort&keyword=$keyword&roleId=$roleID");
+        
   }
 }

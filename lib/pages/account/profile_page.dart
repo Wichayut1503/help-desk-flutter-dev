@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/image_token.dart';
 import 'package:flutter_application_1/interfaces/Account/my_account.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/services/global_service.dart';
@@ -17,6 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Future<MyAccount> myAccount;
+  static const double _radius = 90;
 
   @override
   void initState() {
@@ -64,12 +66,19 @@ class _ProfilePageState extends State<ProfilePage> {
               return Column(
                 children: [
                   const SizedBox(height: 16),
-                  const ProfilePic(),
+                  CircularImageWithToken(
+                    imageUrl: AccountService.getUserImage(
+                            snapshot.data?.data?.imagePath) ??
+                        '',
+                    token: GlobalService().accessToken,
+                    radius: _radius,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: Text(
                       email,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                   ),
                   ProfileMenu(
