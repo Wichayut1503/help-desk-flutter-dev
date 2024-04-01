@@ -47,9 +47,7 @@ class _CircularImageWithTokenState extends State<CircularImageWithToken> {
       }
     } catch (e) {
       print('Error fetching image: $e');
-      setState(() {
-        _loadingFailed = true;
-      });
+      
     }
   }
 
