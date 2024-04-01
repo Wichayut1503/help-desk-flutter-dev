@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/my_button.dart';
-import 'package:flutter_application_1/pages/authentication/login-page.dart';
+import 'package:flutter_application_1/pages/authentication/login_page.dart';
 
 class ModalSheet extends StatelessWidget {
   final bool isSuccess;
   final String email;
 
-  const ModalSheet({Key? key, required this.isSuccess, required this.email})
-      : super(key: key);
+  const ModalSheet({super.key, required this.isSuccess, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +14,7 @@ class ModalSheet extends StatelessWidget {
         isSuccess ? "assets/images/correct.png" : "assets/images/cancel.png";
     String title = isSuccess ? "ตรวจสอบอีเมล" : "ไม่พบอีเมลในระบบ";
     String subTitle = isSuccess
-        ? '''ระบบได้ส่งข้อความไปยังอีเมล $email
-กรุณาตรวจสอบอีเมล เพื่อเปลี่ยนรหัสผ่าน'''
+        ? '''ระบบได้ส่งข้อความไปยังอีเมล $email กรุณาตรวจสอบอีเมล เพื่อเปลี่ยนรหัสผ่าน'''
         : "อีเมล $email ไม่พบในระบบ กรุณาลองใหม่อีกครั้ง";
     final titleText = Text(
       title,
@@ -50,14 +48,14 @@ class ModalSheet extends StatelessWidget {
           titleText,
           const SizedBox(height: 32),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: subTitleText),
           const SizedBox(height: 32),
           MyButton(
             onTap: () => isSuccess
                 ? Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   )
                 : Navigator.pop(context),
             btnName: "ยืนยัน",

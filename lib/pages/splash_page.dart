@@ -1,6 +1,6 @@
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/authentication/login-page.dart';
+import 'package:flutter_application_1/pages/authentication/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
             child: Image.asset("assets/images/logo_evt.png"),
           ),
           onAnimationEnd: () => debugPrint("On Fade In End"),
-          nextScreen: LoginPage(),
+          nextScreen: const LoginPage(),
         );
   }
 }
