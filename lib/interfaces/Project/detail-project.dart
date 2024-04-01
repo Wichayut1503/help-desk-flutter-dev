@@ -4,7 +4,7 @@ class DetailProject {
   int? totalElements;
   int? totalPages;
   bool? last;
-  int? size;
+  int? size; 
   int? number;
   Sort? sort;
   int? numberOfElements;
