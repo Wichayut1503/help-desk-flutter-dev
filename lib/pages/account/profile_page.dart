@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/image_token.dart';
 import 'package:flutter_application_1/interfaces/Account/my_account.dart';
+import 'package:flutter_application_1/pages/account/show_account_details.dart';
+import 'package:flutter_application_1/pages/authentication/login_page.dart';
 import 'package:flutter_application_1/services/account_service.dart';
 import 'package:flutter_application_1/services/global_service.dart';
 import 'package:http/http.dart' as http;
@@ -84,17 +86,28 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileMenu(
                     text: "My Account",
                     icon: "assets/images/profile.png",
-                    press: () => {},
-                  ),
-                  ProfileMenu(
-                    text: "Settings",
-                    icon: "assets/images/setting.png",
-                    press: () {},
+                    press: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ShowDetailAccountPage(
+                              userId: snapshot.data?.data?.id),
+                        ),
+                      )
+                    },
                   ),
                   ProfileMenu(
                     text: "Log Out",
                     icon: "assets/images/logout.png",
-                    press: () {},
+                    press: () {
+                      GlobalService().accessToken = "";
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );

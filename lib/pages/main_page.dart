@@ -23,24 +23,6 @@ class _MyMainPageState extends State<MyMainPage> {
             // หน้า ShowList
             const ShowAccountList(),
 
-            // หน้า Likes
-            Container(
-              color: const Color.fromARGB(255, 0, 95, 188),
-              child: const Center(
-                child: Text("Likes Page",
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
-              ),
-            ),
-
-            // หน้า Search
-            Container(
-              color: const Color.fromARGB(255, 0, 95, 188),
-              child: const Center(
-                child: Text("Search Page",
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
-              ),
-            ),
-
             // หน้า Profile
             const ProfilePage(),
           ],
@@ -53,16 +35,6 @@ class _MyMainPageState extends State<MyMainPage> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.home),
               title: const Text("Home"),
-              selectedColor: const Color.fromARGB(255, 0, 95, 188)
-            ),
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.favorite_border),
-              title: const Text("Likes"),
-              selectedColor: const Color.fromARGB(255, 0, 95, 188)
-            ),
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.search),
-              title: const Text("Search"),
               selectedColor: const Color.fromARGB(255, 0, 95, 188)
             ),
             SalomonBottomBarItem(
