@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
 class ProfilePic extends StatelessWidget {
+  final String imageUrl;
+  final double width; // เปลี่ยนประเภทเป็น double
+  final double height; // เปลี่ยนประเภทเป็น double
+
   const ProfilePic({
     Key? key,
+    required this.imageUrl,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 184,
-      width: 184,
+    return SizedBox(
+      height: height,
+      width: width,
       child: Stack(
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+            backgroundImage: NetworkImage(imageUrl),
           ),
         ],
       ),
