@@ -78,6 +78,7 @@ class _ShowListProjectState extends State<ShowListProject> {
     );
 
     if (response.statusCode == 200) {
+      print(response.body);
       return DetailProject.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {

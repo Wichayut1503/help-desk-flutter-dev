@@ -1,8 +1,8 @@
 class DetailProject {
   List<Content>? content;
   Pageable? pageable;
-  int? totalPages;
   int? totalElements;
+  int? totalPages;
   bool? last;
   int? size;
   int? number;
@@ -14,8 +14,8 @@ class DetailProject {
   DetailProject(
       {this.content,
       this.pageable,
-      this.totalPages,
       this.totalElements,
+      this.totalPages,
       this.last,
       this.size,
       this.number,
@@ -34,8 +34,8 @@ class DetailProject {
     pageable = json['pageable'] != null
         ? new Pageable.fromJson(json['pageable'])
         : null;
-    totalPages = json['totalPages'];
     totalElements = json['totalElements'];
+    totalPages = json['totalPages'];
     last = json['last'];
     size = json['size'];
     number = json['number'];
@@ -53,8 +53,8 @@ class DetailProject {
     if (this.pageable != null) {
       data['pageable'] = this.pageable!.toJson();
     }
-    data['totalPages'] = this.totalPages;
     data['totalElements'] = this.totalElements;
+    data['totalPages'] = this.totalPages;
     data['last'] = this.last;
     data['size'] = this.size;
     data['number'] = this.number;
@@ -69,16 +69,15 @@ class DetailProject {
 }
 
 class Content {
-  Null? countTicket;
   Null? countStatusOpen;
   Null? countStatusInProcess;
   Null? countStatusDone;
   Null? countStatusClose;
   Null? countStatusReturn;
   Null? countStatusReject;
-  int? countUserProject;
   Null? countUserClient;
   Null? countUserAdmin;
+  Null? colorStatusResponses;
   int? id;
   String? name;
   String? status;
@@ -91,18 +90,19 @@ class Content {
   String? updatedBy;
   int? projectDays;
   int? maintainDays;
+  int? countTicket;
+  int? countUserProject;
 
   Content(
-      {this.countTicket,
-      this.countStatusOpen,
+      {this.countStatusOpen,
       this.countStatusInProcess,
       this.countStatusDone,
       this.countStatusClose,
       this.countStatusReturn,
       this.countStatusReject,
-      this.countUserProject,
       this.countUserClient,
       this.countUserAdmin,
+      this.colorStatusResponses,
       this.id,
       this.name,
       this.status,
@@ -114,19 +114,20 @@ class Content {
       this.createdBy,
       this.updatedBy,
       this.projectDays,
-      this.maintainDays});
+      this.maintainDays,
+      this.countTicket,
+      this.countUserProject});
 
   Content.fromJson(Map<String, dynamic> json) {
-    countTicket = json['countTicket'];
     countStatusOpen = json['countStatusOpen'];
     countStatusInProcess = json['countStatusInProcess'];
     countStatusDone = json['countStatusDone'];
     countStatusClose = json['countStatusClose'];
     countStatusReturn = json['countStatusReturn'];
     countStatusReject = json['countStatusReject'];
-    countUserProject = json['countUserProject'];
     countUserClient = json['countUserClient'];
     countUserAdmin = json['countUserAdmin'];
+    colorStatusResponses = json['colorStatusResponses'];
     id = json['id'];
     name = json['name'];
     status = json['status'];
@@ -140,20 +141,21 @@ class Content {
     updatedBy = json['updatedBy'];
     projectDays = json['projectDays'];
     maintainDays = json['maintainDays'];
+    countTicket = json['countTicket'];
+    countUserProject = json['countUserProject'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['countTicket'] = this.countTicket;
     data['countStatusOpen'] = this.countStatusOpen;
     data['countStatusInProcess'] = this.countStatusInProcess;
     data['countStatusDone'] = this.countStatusDone;
     data['countStatusClose'] = this.countStatusClose;
     data['countStatusReturn'] = this.countStatusReturn;
     data['countStatusReject'] = this.countStatusReject;
-    data['countUserProject'] = this.countUserProject;
     data['countUserClient'] = this.countUserClient;
     data['countUserAdmin'] = this.countUserAdmin;
+    data['colorStatusResponses'] = this.colorStatusResponses;
     data['id'] = this.id;
     data['name'] = this.name;
     data['status'] = this.status;
@@ -168,6 +170,8 @@ class Content {
     data['updatedBy'] = this.updatedBy;
     data['projectDays'] = this.projectDays;
     data['maintainDays'] = this.maintainDays;
+    data['countTicket'] = this.countTicket;
+    data['countUserProject'] = this.countUserProject;
     return data;
   }
 }
